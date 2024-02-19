@@ -42,7 +42,7 @@ architecture Behavioral of fancy_counter is
     --signal
     signal direction_register_output : std_logic;
     signal value_register_output : std_logic_vector(3 downto 0);
-    signal cnt_val : std_logic_vector(3 downto 0);
+    signal cnt_val : std_logic_vector(3 downto 0) := (others=>'0');
 begin
 
     direction: process(CLK)
