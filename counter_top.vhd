@@ -59,34 +59,33 @@ architecture Behavioral of counter_top is
     end component;
 
 
-    signal u1_out, u2_out, u3_out, u4_out, div: std_logic;
+    signal rst, en, updn, ld, div: std_logic;
     
 begin
-
-    u1: debounce 
+    reset: debounce 
         port map(
             btn => btn(0),
             clk=>clk,
-            dbnc => u1_out);
-    u2: debounce 
+            dbnc => rst);
+    enable: debounce 
         port map(
             btn => btn(1),
             clk=>clk,
-            dbnc => u2_out);
+            dbnc => en);
 
-    u3: debounce 
+    updown: debounce 
         port map(
             btn => btn(2),
             clk=>clk,
-            dbnc => u3_out);
+            dbnc => updn);
             
-    u4: debounce 
+    load: debounce 
         port map(
             btn => btn(3),
             clk=>clk,
-            dbnc => u4_out);           
+            dbnc => ld);           
 
-    u5: clock_div
+    clockdiv: clock_div
         port map(
             clk=> clk,
             div=>div);
@@ -96,10 +95,10 @@ begin
             clk=>clk,
             clk_en=>div,
             dir=>sw(0),
-            en=>u2_out,
-            ld=>u4_out,
-            rst=>u1_out,
-            updn=>u3_out,
+            en=>en,
+            ld=>ld,
+            rst=>rst,
+            updn=>updn,
             val=>sw,
             cnt=>cnt);
 

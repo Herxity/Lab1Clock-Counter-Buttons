@@ -52,40 +52,31 @@ begin
 
     clk_en_process: process
         begin
-            tb_clk_en <='1';
-            tb_en <='1';
-            wait for 8 ns;
-            tb_clk_en <= '0';
-            wait for 3 ns;
-            tb_en <='0';
-            
-            wait for 2 ns;
+            tb_clk_en <='0';
+            wait for 4 ns;
             tb_clk_en <= '1';
-            tb_en <= '1';
+            wait for 4 ns;
     end process clk_en_process;
     
     rst_proc: process
         begin
-            tb_rst <= '0';
-            wait for 10 ns;
-            --tb_rst <= '1';
-    
-            wait for 3 ns;
-            tb_rst <= '0';
+
     
     end process rst_proc;
 
     signals_process: process
     begin
+            tb_en<='1';
             tb_updn <= '1';
             tb_dir<= '1';
-            tb_val <= "0111";
-            tb_ld <='1';
+            tb_val <= "1111";
+            tb_ld <='1'; 
+            wait for 20 ns;
+            tb_en<='1';
+            tb_rst <= '1';
             wait for 10 ns;
-            tb_dir<= '0';
-            tb_val <= "1000";
-            tb_ld <='1';
-            
+            tb_rst <= '0';
+
     end process signals_process;
     
     --------------------------------------------------------------------------------
