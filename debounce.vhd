@@ -42,7 +42,6 @@ begin
                 -- Wait 20ms = wait 2.5million cycles
                 if (unsigned(counter) < 2499999) then
                     counter <= std_logic_vector(unsigned(counter) + 1);
---                    dbnc  <='0'; --Happens at first countup after we set counter = 0
                 else
                     counter <= (others => '0');
                     dbnc <= '1'; --Happens @ Reset
