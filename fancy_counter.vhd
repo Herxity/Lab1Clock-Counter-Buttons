@@ -44,34 +44,29 @@ architecture Behavioral of fancy_counter is
     signal cnt_val : std_logic_vector(3 downto 0) := (others=>'0');
 begin
 
-    direction: process(CLK)
-    begin
-        if (rising_edge(CLK) and en='1' and clk_en = '1') then
-            if (ld = '1') then
-                value_register_output <= val;
-            end if;
-        end if;
-    end process;
     
   
     cnt <= cnt_val;
 
     
-    value: process(CLK)
-    begin
-        if (rising_edge(CLK) and en = '1'and clk_en = '1') then
-            if (updn = '1') then
-                direction_register_output <= dir;
-            end if;
-        end if;
-    end process;
 
     counter: process(clk)
     begin
         if(en='1' and rising_edge(clk)) then
+            --CHECK IF RESETTING
             if(rst = '1') then
                 cnt_val <= "0000"; --Reset count
             elsif(clk_en = '1') then
+                --UPDATE REGISTERS
+                if (ld = '1') then
+                    value_register_output <= val;
+                end if;
+            
+                if (updn = '1') then
+                    direction_register_output <= dir;
+                end if;
+                
+                
                 if(direction_register_output='1') then
                     cnt_val <= std_logic_vector(unsigned(cnt_val) + 1);
                     if(cnt_val = value_register_output) then
