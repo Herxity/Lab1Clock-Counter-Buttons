@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 02/08/2024 07:34:38 PM
+-- Create Date: 02/15/2024 08:21:31 PM
 -- Design Name: 
--- Module Name: clock_div - Behavioral
+-- Module Name: divider_top - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -19,9 +19,8 @@
 ----------------------------------------------------------------------------------
 
 
-library ieee;
-    use ieee.std_logic_1164.all;
-    use ieee.numeric_std.all;
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -32,28 +31,40 @@ library ieee;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity clock_div is
-  Port ( clk : in std_logic;
-         div : out std_logic);
-end clock_div;
+entity divider_top is
+  Port (
+    div: inout std_logic;
+    clk: in std_logic );
+end divider_top;
 
-architecture Behavioral of clock_div is
-    signal counter : std_logic_vector(26 downto 0) := (others => '0');
+architecture Behavioral of divider_top is
+
+    component clock_div is
+      Port ( clk : in std_logic;
+             div : out std_logic);
+    end component clock_div;
+
+    --signal
+    signal divider_output : std_logic;
+    signal CE : std_logic;
+    
 begin
 
-    process(clk)
+    clo: clock_div
+        port map(
+            clk => clk,
+            div => divider_output
+     );
+     
+    process(CLK,divider_output )
     begin
-    
-        if rising_edge(clk) then
-                
-            if (unsigned(counter) < 62499999) then
-                counter <= std_logic_vector(unsigned(counter) + 1);
-                div <='0'; --Happens at first countup after we set counter = 0
-            else
-                counter <= (others => '0');
-                div <= '1'; --Happens @ Reset
+        if (rising_edge(CLK)) then
+            if (divider_output  = '1') then
+                div <= not(div);
             end if;
         end if;
-    
     end process;
+    
+
+
 end Behavioral;
