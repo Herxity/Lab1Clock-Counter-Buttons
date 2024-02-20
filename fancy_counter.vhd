@@ -69,7 +69,7 @@ begin
                 
                 if(direction_register_output='1') then
                     cnt_val <= std_logic_vector(unsigned(cnt_val) + 1);
-                    if(cnt_val = value_register_output) then
+                    if(cnt_val >= value_register_output) then
                         cnt_val <= "0000";
                     end if;
                 elsif(direction_register_output = '0') then

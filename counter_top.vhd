@@ -89,7 +89,6 @@ begin
         port map(
             clk=> clk,
             div=>div);
-   
     u6: fancy_counter
         port map(
             clk=>clk,

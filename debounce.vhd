@@ -37,7 +37,7 @@ begin
 
     debounce: process(clk,btn)
     begin
-        if btn = '1' then
+        if btn = '0' then
             if rising_edge(clk)then
                 -- Wait 20ms = wait 2.5million cycles
                 if (unsigned(counter) < 2499999) then
